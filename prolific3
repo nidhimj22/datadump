@@ -1,0 +1,378 @@
+-- MySQL dump 10.13  Distrib 5.5.43, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: prolific3
+-- ------------------------------------------------------
+-- Server version	5.5.43-0ubuntu0.14.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `auth_group`
+--
+
+DROP TABLE IF EXISTS `auth_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group`
+--
+
+LOCK TABLES `auth_group` WRITE;
+/*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_group_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_group_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_group_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `group_id` (`group_id`,`permission_id`),
+  KEY `auth_group_permissions_5f412f9a` (`group_id`),
+  KEY `auth_group_permissions_83d7f98b` (`permission_id`),
+  CONSTRAINT `group_id_refs_id_f4b32aac` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
+  CONSTRAINT `permission_id_refs_id_6ba0f519` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group_permissions`
+--
+
+LOCK TABLES `auth_group_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_permission`
+--
+
+DROP TABLE IF EXISTS `auth_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `content_type_id` int(11) NOT NULL,
+  `codename` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `content_type_id` (`content_type_id`,`codename`),
+  KEY `auth_permission_37ef4eb4` (`content_type_id`),
+  CONSTRAINT `content_type_id_refs_id_d043b34a` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_permission`
+--
+
+LOCK TABLES `auth_permission` WRITE;
+/*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
+INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can add permission',2,'add_permission'),(5,'Can change permission',2,'change_permission'),(6,'Can delete permission',2,'delete_permission'),(7,'Can add group',3,'add_group'),(8,'Can change group',3,'change_group'),(9,'Can delete group',3,'delete_group'),(10,'Can add user',4,'add_user'),(11,'Can change user',4,'change_user'),(12,'Can delete user',4,'delete_user'),(13,'Can add content type',5,'add_contenttype'),(14,'Can change content type',5,'change_contenttype'),(15,'Can delete content type',5,'delete_contenttype'),(16,'Can add session',6,'add_session'),(17,'Can change session',6,'change_session'),(18,'Can delete session',6,'delete_session'),(19,'Can add player',7,'add_player'),(20,'Can change player',7,'change_player'),(21,'Can delete player',7,'delete_player'),(22,'Can add game',8,'add_game'),(23,'Can change game',8,'change_game'),(24,'Can delete game',8,'delete_game'),(25,'Can add feedback',9,'add_feedback'),(26,'Can change feedback',9,'change_feedback'),(27,'Can delete feedback',9,'delete_feedback');
+/*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user`
+--
+
+DROP TABLE IF EXISTS `auth_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `password` varchar(128) NOT NULL,
+  `last_login` datetime NOT NULL,
+  `is_superuser` tinyint(1) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `first_name` varchar(30) NOT NULL,
+  `last_name` varchar(30) NOT NULL,
+  `email` varchar(75) NOT NULL,
+  `is_staff` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `date_joined` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user`
+--
+
+LOCK TABLES `auth_user` WRITE;
+/*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user_groups`
+--
+
+DROP TABLE IF EXISTS `auth_user_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`,`group_id`),
+  KEY `auth_user_groups_6340c63c` (`user_id`),
+  KEY `auth_user_groups_5f412f9a` (`group_id`),
+  CONSTRAINT `user_id_refs_id_40c41112` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
+  CONSTRAINT `group_id_refs_id_274b862c` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user_groups`
+--
+
+LOCK TABLES `auth_user_groups` WRITE;
+/*!40000 ALTER TABLE `auth_user_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user_user_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_user_user_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user_user_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`,`permission_id`),
+  KEY `auth_user_user_permissions_6340c63c` (`user_id`),
+  KEY `auth_user_user_permissions_83d7f98b` (`permission_id`),
+  CONSTRAINT `user_id_refs_id_4dc23c39` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
+  CONSTRAINT `permission_id_refs_id_35d9ac25` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user_user_permissions`
+--
+
+LOCK TABLES `auth_user_user_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_user_user_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user_user_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_admin_log`
+--
+
+DROP TABLE IF EXISTS `django_admin_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_admin_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `action_time` datetime NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `content_type_id` int(11) DEFAULT NULL,
+  `object_id` longtext,
+  `object_repr` varchar(200) NOT NULL,
+  `action_flag` smallint(5) unsigned NOT NULL,
+  `change_message` longtext NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `django_admin_log_6340c63c` (`user_id`),
+  KEY `django_admin_log_37ef4eb4` (`content_type_id`),
+  CONSTRAINT `content_type_id_refs_id_93d2d1f8` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
+  CONSTRAINT `user_id_refs_id_c0d12874` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_admin_log`
+--
+
+LOCK TABLES `django_admin_log` WRITE;
+/*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_content_type`
+--
+
+DROP TABLE IF EXISTS `django_content_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_content_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `app_label` varchar(100) NOT NULL,
+  `model` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `app_label` (`app_label`,`model`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_content_type`
+--
+
+LOCK TABLES `django_content_type` WRITE;
+/*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
+INSERT INTO `django_content_type` VALUES (1,'log entry','admin','logentry'),(2,'permission','auth','permission'),(3,'group','auth','group'),(4,'user','auth','user'),(5,'content type','contenttypes','contenttype'),(6,'session','sessions','session'),(7,'player','newapp','player'),(8,'game','newapp','game'),(9,'feedback','newapp','feedback');
+/*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_session`
+--
+
+DROP TABLE IF EXISTS `django_session`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_session` (
+  `session_key` varchar(40) NOT NULL,
+  `session_data` longtext NOT NULL,
+  `expire_date` datetime NOT NULL,
+  PRIMARY KEY (`session_key`),
+  KEY `django_session_b7b81f0c` (`expire_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_session`
+--
+
+LOCK TABLES `django_session` WRITE;
+/*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
+INSERT INTO `django_session` VALUES ('0u54l9cdcftw8okdoghw53x96ng6aoxg','NDFmNzA1MGNjN2ZmYzY4NDVkMzllNzk4OTIwMjQ2OTgwNmE4NTQyMjp7fQ==','2015-08-16 18:13:51'),('1u0hkzwb2n7ymnh3c2dx88hl2lpca7n2','NDFmNzA1MGNjN2ZmYzY4NDVkMzllNzk4OTIwMjQ2OTgwNmE4NTQyMjp7fQ==','2015-08-16 18:13:55'),('3fhq3bppovkbm61tec7jfrjpisyq2r08','NDFmNzA1MGNjN2ZmYzY4NDVkMzllNzk4OTIwMjQ2OTgwNmE4NTQyMjp7fQ==','2015-08-16 18:15:50'),('6unurgixidghbrffzy7zdrfi9c21ioko','NDFmNzA1MGNjN2ZmYzY4NDVkMzllNzk4OTIwMjQ2OTgwNmE4NTQyMjp7fQ==','2015-08-16 18:19:53'),('6wpf745zgilksw6kd01xoyy399j1np9c','MTNlMWIyNmUwNzBiMTFlYzM3MGYyODc4YjhlZjQ4M2JkMTA0MjE1Zjp7ImgyIjowLCJoMyI6NSwiaDEiOi0xMCwiaDQiOjAsImV4dHJhX2giOjAsImNob2ljZV9hIjoiTm9uZSIsInBsYXllcmlkIjo2LCJ0cmlhbHMiOjUwLCJjaG9pY2VfaCI6Ik5vbmUiLCJleHRyYV9hIjowLCJ0cmlhbG51bWJlciI6MSwiaGFja2VybW92ZXMiOltdLCJwcm9maWxlIjoiSGFja2VyIiwiYTEiOjUwLCJzY29yZV9hIjoyNTAwLCJhMyI6LTUsImJhc2UiOjI1MDAsImE0IjowLCJzY29yZV9oIjoyNTAwLCJnYW1lbWF0cml4IjozLCJhbmFseXN0bW92ZXMiOltdLCJxIjozMy4wLCJwIjo4LjMzLCJhMiI6LTV9','2015-08-16 14:39:06'),('6wtsydt6d2qhl3dibv7jvjbefximgfzn','MmQ2ZDBjNTc0ODFiZDdiNGNkNGJjY2M2MzI5NjRlM2Q0MDVkODNjOTp7ImgyIjowLCJoMyI6NSwiaDEiOi0xMCwiaDQiOjAsImV4dHJhX2giOjAsImNob2ljZV9hIjoiRGVmZW5kIiwicGxheWVyaWQiOjI1LCJ0cmlhbHMiOjE0LCJjaG9pY2VfaCI6Ik5vdCBBdHRhY2siLCJleHRyYV9hIjotNSwidHJpYWxudW1iZXIiOjM3LCJoYWNrZXJtb3ZlcyI6WyIwIiwiMCIsIjAiLCIxIiwiMSIsIjEiLCIxIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjEiLCIxIiwiMSIsIjEiLCIxIiwiMSIsIjEiLCIwIiwiMSIsIjEiLCIwIiwiMSIsIjEiLCIxIiwiMSIsIjEiLCIxIiwiMSIsIjAiLCIxIiwiMSIsIjEiXSwicHJvZmlsZSI6IkhhY2tlciIsImExIjo1MCwic2NvcmVfYSI6MjY3MCwiYTMiOi01LCJiYXNlIjoyNTAwLCJhNCI6MCwic2NvcmVfaCI6MjQ5MCwiZ2FtZW1hdHJpeCI6MywiYW5hbHlzdG1vdmVzIjpbIjAiLCIxIiwiMSIsIjEiLCIxIiwiMSIsIjEiLCIxIiwiMSIsIjEiLCIwIiwiMCIsIjEiLCIwIiwiMCIsIjEiLCIxIiwiMCIsIjEiLCIxIiwiMCIsIjAiLCIxIiwiMSIsIjEiLCIxIiwiMCIsIjEiLCIxIiwiMCIsIjAiLCIxIiwiMSIsIjEiLCIwIiwiMCJdLCJxIjozMy4wLCJwIjo4LjMzLCJhMiI6LTV9','2015-08-16 18:15:05'),('7zwq8xmpigaei9etfswa4joiucai6m5h','NDM1MGMxZTMyNWE1ZjkwMGMxZTU2MzYzMDlhYmY0ZDU4NGE4NDkzNDp7ImgyIjowLCJoMyI6NSwiaDEiOi0xMCwiaDQiOjAsImV4dHJhX2giOjAsImNob2ljZV9hIjoiTm90IERlZmVuZCIsInBsYXllcmlkIjo4LCJ0cmlhbHMiOjM3LCJjaG9pY2VfaCI6Ik5vdCBBdHRhY2siLCJleHRyYV9hIjowLCJ0cmlhbG51bWJlciI6MTQsImhhY2tlcm1vdmVzIjpbIjEiLCIxIiwiMSIsIjAiLCIwIiwiMCIsIjEiLCIxIiwiMCIsIjAiLCIxIiwiMSIsIjEiXSwicHJvZmlsZSI6IkhhY2tlciIsImExIjo1MCwic2NvcmVfYSI6MjUyNSwiYTMiOi01LCJiYXNlIjoyNTAwLCJhNCI6MCwic2NvcmVfaCI6MjUxMCwiZ2FtZW1hdHJpeCI6MywiYW5hbHlzdG1vdmVzIjpbIjEiLCIxIiwiMSIsIjAiLCIxIiwiMSIsIjEiLCIwIiwiMSIsIjEiLCIxIiwiMSIsIjEiXSwicSI6MzMuMCwicCI6OC4zMywiYTIiOi01fQ==','2015-08-16 18:06:42'),('8a2slto7phtn0hvtdhql07lozuljhemo','NDFmNzA1MGNjN2ZmYzY4NDVkMzllNzk4OTIwMjQ2OTgwNmE4NTQyMjp7fQ==','2015-08-16 18:14:03'),('8bxal82bmnpicesga26cbfe9rwcn7wpq','ODA3OTMxZDYzM2FhMTU0MmEwYWU2NTY2YTNlNDNlMjQ3NDA5YmU2Yzp7ImgyIjowLCJoMyI6NSwiaDEiOi0xMCwiaDQiOjAsImV4dHJhX2giOjUsImNob2ljZV9hIjoiTm90IERlZmVuZCIsInBsYXllcmlkIjozMSwidHJpYWxzIjowLCJ3aW5uZXIiOiJBbmFseXN0IiwiY2hvaWNlX2giOiJBdHRhY2siLCJleHRyYV9hIjotNSwidHJpYWxudW1iZXIiOjUwLCJoYWNrZXJtb3ZlcyI6WyIwIiwiMCIsIjEiLCIxIiwiMCIsIjEiLCIxIiwiMCIsIjAiLCIxIiwiMCIsIjEiLCIxIiwiMCIsIjAiLCIwIiwiMSIsIjAiLCIxIiwiMSIsIjAiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjAiLCIxIiwiMCIsIjAiLCIxIiwiMSIsIjAiLCIwIiwiMCIsIjEiLCIwIiwiMCIsIjAiLCIwIiwiMCIsIjEiLCIwIiwiMSIsIjEiLCIwIiwiMCIsIjAiLCIwIiwiMCJdLCJwcm9maWxlIjoiSGFja2VyIiwiYTEiOjUwLCJzY29yZV9hIjoyOTI1LCJhMyI6LTUsImJhc2UiOjI1MDAsImE0IjowLCJzY29yZV9oIjoyNTAwLCJnYW1lbWF0cml4IjozLCJhbmFseXN0bW92ZXMiOlsiMSIsIjAiLCIxIiwiMCIsIjEiLCIxIiwiMCIsIjEiLCIwIiwiMSIsIjEiLCIxIiwiMSIsIjEiLCIwIiwiMSIsIjEiLCIwIiwiMSIsIjEiLCIxIiwiMSIsIjAiLCIwIiwiMSIsIjAiLCIxIiwiMSIsIjEiLCIxIiwiMSIsIjEiLCIxIiwiMSIsIjAiLCIxIiwiMSIsIjEiLCIxIiwiMCIsIjEiLCIxIiwiMCIsIjEiLCIwIiwiMCIsIjEiLCIxIiwiMSIsIjEiXSwicSI6MzMuMCwicCI6OC4zMywiYTIiOi01fQ==','2015-08-23 05:16:13'),('8s7ryyers3iq0jx3mnpjctoyvdnv19q6','NDFmNzA1MGNjN2ZmYzY4NDVkMzllNzk4OTIwMjQ2OTgwNmE4NTQyMjp7fQ==','2015-08-16 18:16:50'),('b7lb9nijp9n6roe45p4l2cbsb1bo1361','ODQ0YjIyNTcxYTk1ZjA4OTdiNzEzYzM3NDk2NzAyZWM3YTI3YWExZDp7ImgyIjowLCJoMyI6NSwiaDEiOi0xMCwiaDQiOjAsImV4dHJhX2giOjAsImNob2ljZV9hIjoiTm90IERlZmVuZCIsInBsYXllcmlkIjo1LCJ0cmlhbHMiOjQ5LCJjaG9pY2VfaCI6Ik5vdCBBdHRhY2siLCJleHRyYV9hIjowLCJ0cmlhbG51bWJlciI6MiwiaGFja2VybW92ZXMiOlsiMSJdLCJwcm9maWxlIjoiSGFja2VyIiwiYTEiOjUwLCJzY29yZV9hIjoyNTAwLCJhMyI6LTUsImJhc2UiOjI1MDAsImE0IjowLCJzY29yZV9oIjoyNTAwLCJnYW1lbWF0cml4IjozLCJhbmFseXN0bW92ZXMiOlsiMSJdLCJxIjozMy4wLCJwIjo4LjMzLCJhMiI6LTV9','2015-08-16 13:33:09'),('cvqujpbxqahsjivhuoc4wc2dzemx1io3','NDFmNzA1MGNjN2ZmYzY4NDVkMzllNzk4OTIwMjQ2OTgwNmE4NTQyMjp7fQ==','2015-08-16 18:20:10'),('dznzpximre0lmxdlsogcsi9rscm1eir0','NDFmNzA1MGNjN2ZmYzY4NDVkMzllNzk4OTIwMjQ2OTgwNmE4NTQyMjp7fQ==','2015-08-16 18:15:07'),('f1rjn5txw03js8h2eqxz1vwqkcrqhhlp','NDFmNzA1MGNjN2ZmYzY4NDVkMzllNzk4OTIwMjQ2OTgwNmE4NTQyMjp7fQ==','2015-08-16 18:18:48'),('fadwiz4rjstqrug21vgm322eelgksw0k','NDFmNzA1MGNjN2ZmYzY4NDVkMzllNzk4OTIwMjQ2OTgwNmE4NTQyMjp7fQ==','2015-08-16 18:21:09'),('jzwf3gbpu5eheikkctxgit9qmrume8qa','NDFmNzA1MGNjN2ZmYzY4NDVkMzllNzk4OTIwMjQ2OTgwNmE4NTQyMjp7fQ==','2015-08-16 18:31:46'),('kfa32otr6jrky6vejq63lqnqyocrntdk','YWEzZDUwMjRlYjA4ZGUzZmYwMmUyMjI5MmJjODhhZTAwNWFiODNjMzp7ImgyIjowLCJoMyI6NSwiaDEiOi0xMCwiaDQiOjAsImV4dHJhX2giOjAsImNob2ljZV9hIjoiTm9uZSIsInBsYXllcmlkIjoyNywidHJpYWxzIjo1MCwiY2hvaWNlX2giOiJOb25lIiwiZXh0cmFfYSI6MCwidHJpYWxudW1iZXIiOjEsImhhY2tlcm1vdmVzIjpbXSwicHJvZmlsZSI6IkhhY2tlciIsImExIjo1MCwic2NvcmVfYSI6MjUwMCwiYTMiOi01LCJiYXNlIjoyNTAwLCJhNCI6MCwic2NvcmVfaCI6MjUwMCwiZ2FtZW1hdHJpeCI6MywiYW5hbHlzdG1vdmVzIjpbXSwicSI6MzMuMCwicCI6OC4zMywiYTIiOi01fQ==','2015-08-16 18:11:06'),('m7iucigafj20epjssl2fhhj561g9ac6h','NDFmNzA1MGNjN2ZmYzY4NDVkMzllNzk4OTIwMjQ2OTgwNmE4NTQyMjp7fQ==','2015-08-16 18:15:11'),('ng9lcxg53jbvu28iaac6g0f8b8raiz6w','NDFmNzA1MGNjN2ZmYzY4NDVkMzllNzk4OTIwMjQ2OTgwNmE4NTQyMjp7fQ==','2015-08-16 18:20:06'),('ojksgk5yhq7kx03w3n5tewn4mtxt57rt','NDFmNzA1MGNjN2ZmYzY4NDVkMzllNzk4OTIwMjQ2OTgwNmE4NTQyMjp7fQ==','2015-08-16 18:20:55'),('r46xcpx9mh8lvgomdie5qvdcgsj0ghi6','NDFmNzA1MGNjN2ZmYzY4NDVkMzllNzk4OTIwMjQ2OTgwNmE4NTQyMjp7fQ==','2015-08-16 18:26:24'),('so9pnpu254405do5g6hsz7uvkgty4e7r','NGFlYWVmN2RiYjIxYjUwOWQ2Yjk0ZjIzNGZlMDc5ZWZkYTk1NDI4Yjp7ImgyIjowLCJoMyI6NSwiaDEiOi0xMCwiaDQiOjAsImV4dHJhX2giOjAsImNob2ljZV9hIjoiRGVmZW5kIiwicGxheWVyaWQiOjMwLCJ0cmlhbHMiOjQ1LCJjaG9pY2VfaCI6Ik5vdCBBdHRhY2siLCJleHRyYV9hIjotNSwidHJpYWxudW1iZXIiOjYsImhhY2tlcm1vdmVzIjpbIjAiLCIxIiwiMSIsIjAiLCIxIl0sInByb2ZpbGUiOiJIYWNrZXIiLCJhMSI6NTAsInNjb3JlX2EiOjI1NDAsImEzIjotNSwiYmFzZSI6MjUwMCwiYTQiOjAsInNjb3JlX2giOjI0OTUsImdhbWVtYXRyaXgiOjMsImFuYWx5c3Rtb3ZlcyI6WyIwIiwiMSIsIjEiLCIxIiwiMCJdLCJxIjozMy4wLCJwIjo4LjMzLCJhMiI6LTV9','2015-08-16 18:20:11'),('tvnz4t9tn49jucr90cg2i6x42pp1sg0b','NDFmNzA1MGNjN2ZmYzY4NDVkMzllNzk4OTIwMjQ2OTgwNmE4NTQyMjp7fQ==','2015-08-16 18:18:57'),('vktzsdovbd1gcoqh1sc5v89cqp25phie','NDFmNzA1MGNjN2ZmYzY4NDVkMzllNzk4OTIwMjQ2OTgwNmE4NTQyMjp7fQ==','2015-08-16 18:27:12'),('wxj3es14s7usut7z23sg4wdhbc1bdbya','NDFmNzA1MGNjN2ZmYzY4NDVkMzllNzk4OTIwMjQ2OTgwNmE4NTQyMjp7fQ==','2015-08-16 18:16:48');
+/*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `newapp_feedback`
+--
+
+DROP TABLE IF EXISTS `newapp_feedback`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `newapp_feedback` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `player_id` int(11) DEFAULT NULL,
+  `ownstrategy` varchar(100) NOT NULL,
+  `oppstrategy` varchar(100) NOT NULL,
+  `influence` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `newapp_feedback_f7c6108c` (`player_id`),
+  CONSTRAINT `player_id_refs_id_46e1c89f` FOREIGN KEY (`player_id`) REFERENCES `newapp_player` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `newapp_feedback`
+--
+
+LOCK TABLES `newapp_feedback` WRITE;
+/*!40000 ALTER TABLE `newapp_feedback` DISABLE KEYS */;
+INSERT INTO `newapp_feedback` VALUES (1,4,'odds in favour of analyst','waiting cleverly for attack','yes'),(2,11,'I tried to look for a pattern on when the Analyst was defending and attacking, and on the rounds he ','Played it cautious, chose not defend a lot. Defended at random points.','I saw him not defending so tried to push attack to try and close the points gap.'),(3,14,'optimally, the hacker should never attack, but I gambled on the first attempt in order to get positi','guessing','none at all'),(4,7,'Tried to not attack most of the time, because a failed attack costed me much and gave him a huge amo','Not defending most of the time, probably.','It was really difficult to play this, because the analyst had much advantage to win the game: I trie'),(5,21,'I tried to guess what the other person would choose. I figure they would think if I didn\'t attack an','My opponent used my previous move to determine whether to attack or defend.','It definitely made me think about my next choice. If I saw that they didn\'t think I would attack the'),(6,15,'I tried to chose mostly a random approach but also tried to anticipate when the analyst would not de','I think my opponent probably tried to figure out any pattern I was using. ','I used the feedback of unsuccessful defenses to try to time my attacks. '),(7,24,'Attack was the only option to gain any points so therefore I played attack every round.','The other strategy seemed to be random between defend and not defend.','They did not influence my decision in any way.'),(8,20,'I figured that I would try to lull the analyst into a false sense of security by not attacking very ','I believe the analyst was doing the same thing.','I kind of saw a pattern going on, where the analyst would not defend for quite a few turns, then def'),(9,12,'I tried to attack a few times and dont get greedy. After a few attack tried to stay defensive, but t','He played passive','It made me nervous'),(10,13,'I mostly tried to play cautiously because the punishment for failed attack was significant. I did en','My opponent played defensively because on average it would earn him or her the most points.','Once my opponent won a few times in the beginning, I realized I should have been more cautious, but '),(11,22,'i decided to not to attack many times and when i realized analyst is no longer defend, I suddenly at','defend as many times as possible','once I attacked, he defended the next 3 or 4 trials'),(12,18,'I never attacked as I knew I would get 0 points if the opponent defended or didn\'t defend. However, ','I think my opponent randomly chose to defend as they didn\'t act on my strategy.','This didn\'t impact my decisions as I had already decided I was going to never attack.'),(13,16,'I just used my common sense to beat the opposite player by mind. As i will make a sudden move say \"A','My opponent just hoped for to play \"Defend\" as he knew by some time or what i\'m going to attack so h','It was a pretty interesting game which tests your mind of what the opposition is thinking & a bit of'),(14,17,'I nearly always attacked, hoping that the analyst would alternate in order to benefit us both','I think they had a similar approach','It seemed the best approach for us both, but I couldn\'t be sure what they were thinking'),(15,23,'The strategy I played many times was not attack for a long period of rounds, then attack when the an',' I feel that the analyst\'s strategy was to not defend for as long as possible before they felt it wa','I felt the analyst was always on the back foot. I felt like they had less chance of being successful'),(16,10,'The rules were unfair.The only way to beat an Analyst was to be defensive as over aggressiveness wou','I doubt the fact that there was actually a human against me as an Analyst.','If I would have been given the opportunity to play as an \'Analyst\' i think the gap could be bigger'),(17,29,'There was nearly no benefit to me either way so I ended up just choosing to do nothing every time fo','I don\'t know.','I stopped trying to do anything.'),(18,28,'I tried to make out what the analyst was thinking, a attack when he least expected it.','I did not think there was any strategy, he / she was just going randomly.','How many times he/she chose to defend/ not defend, whether in a series or random. '),(19,26,'I tried to manipulate the analyst','I think he/she tried to defend wherever I attacked in my previous attempt','Nothing');
+/*!40000 ALTER TABLE `newapp_feedback` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `newapp_game`
+--
+
+DROP TABLE IF EXISTS `newapp_game`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `newapp_game` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `player_id` int(11) DEFAULT NULL,
+  `gametype` int(11) NOT NULL,
+  `hackermoves` varchar(500) NOT NULL,
+  `analystmoves` varchar(500) NOT NULL,
+  `winner` varchar(60) NOT NULL,
+  `hackerscore` int(11) NOT NULL,
+  `analystscore` int(11) NOT NULL,
+  `human` varchar(60) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `newapp_game_f7c6108c` (`player_id`),
+  CONSTRAINT `player_id_refs_id_cb4aa8c4` FOREIGN KEY (`player_id`) REFERENCES `newapp_player` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `newapp_game`
+--
+
+LOCK TABLES `newapp_game` WRITE;
+/*!40000 ALTER TABLE `newapp_game` DISABLE KEYS */;
+INSERT INTO `newapp_game` VALUES (1,4,3,'[u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\']','[u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\']','Analyst',2520,2530,'Hacker'),(2,7,3,'[u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\']','[u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\']','Analyst',2510,2725,'Hacker'),(3,11,3,'[u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\']','[u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\']','Analyst',2515,2695,'Hacker'),(4,13,3,'[u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\']','[u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\']','Analyst',2490,2625,'Hacker'),(5,14,3,'[u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\']','[u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\']','Hacker',2505,2405,'Hacker'),(6,15,3,'[u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\']','[u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\']','Analyst',2475,2795,'Hacker'),(7,21,3,'[u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\']','[u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\']','Analyst',2440,3135,'Hacker'),(8,12,3,'[u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\']','[u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\']','Analyst',2510,2725,'Hacker'),(9,24,3,'[u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\']','[u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\']','Analyst',2360,3680,'Hacker'),(10,20,3,'[u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\']','[u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\']','Analyst',2555,2615,'Hacker'),(11,10,3,'[u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\']','[u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\']','Analyst',2515,2620,'Hacker'),(12,22,3,'[u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\']','[u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\']','Hacker',2495,2475,'Hacker'),(13,16,3,'[u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\']','[u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\']','Analyst',2520,2530,'Hacker'),(14,18,3,'[u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\']','[u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\']','Hacker',2500,2410,'Hacker'),(15,23,3,'[u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\']','[u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\']','Analyst',2535,2620,'Hacker'),(16,17,3,'[u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\']','[u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\']','Analyst',2520,3075,'Hacker'),(17,28,3,'[u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\']','[u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\']','Analyst',2535,2670,'Hacker'),(18,29,3,'[u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\']','[u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\']','Analyst',2490,2525,'Hacker'),(19,26,3,'[u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\']','[u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\']','Analyst',2480,2830,'Hacker'),(20,31,3,'[u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'0\', u\'0\', u\'0\', u\'0\']','[u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'0\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\', u\'0\', u\'1\', u\'1\', u\'0\', u\'1\', u\'0\', u\'0\', u\'1\', u\'1\', u\'1\', u\'1\']','Analyst',2500,2925,'Hacker');
+/*!40000 ALTER TABLE `newapp_game` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `newapp_player`
+--
+
+DROP TABLE IF EXISTS `newapp_player`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `newapp_player` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `age` int(11) NOT NULL,
+  `email` varchar(300) NOT NULL,
+  `country` varchar(60) NOT NULL,
+  `gender` varchar(20) NOT NULL,
+  `education` varchar(50) NOT NULL,
+  `majorstudy` varchar(100) NOT NULL,
+  `occupation` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `newapp_player`
+--
+
+LOCK TABLES `newapp_player` WRITE;
+/*!40000 ALTER TABLE `newapp_player` DISABLE KEYS */;
+INSERT INTO `newapp_player` VALUES (1,51,'no','IN','male','masters','teacher','recher'),(2,51,'no','IN','male','masters','teacher','recher'),(3,51,'no','IN','male','masters','teacher','recher'),(4,51,'no','IN','male','masters','teacher','recher'),(5,23,'dbd','AD','male','3college','gdss','dfbdf'),(6,24,'test','AX','female','highschool','test','test'),(7,23,'559c0d9ffdf99b218a61f4df','ES','male','4college','History','Student'),(8,38,'5589a9d1fdf99b118adfa3a6','US','male','highschool','political science','jewelry designer'),(9,22,'55be577afdf99b2d3095bded','GB','male','masters','Finance','Student'),(10,19,'545cc8a6fdf99b75c2904886','IN','male','4college','Computer Engineering','Student, Part time job'),(11,30,'559bbbdafdf99b7ce19d5b3d','GB','male','3college','Accounting','Sales Assistant'),(12,25,'54affe30fdf99b71c5514d30','HU','male','masters','Japanese language and culture','Student'),(13,34,'55896904fdf99b7416027149','FI','male','4college','Psychology','Entrepreneur'),(14,32,'5589c7cefdf99b18bd86cf31','US','male','4college','Philosophy ','Logistics'),(15,33,'5589541bfdf99b6bd0601674','US','male','masters','Business ','Sales'),(16,20,'54e495fefdf99b4673af6375','IN','male','seniorsecondary','Computer Science','Student'),(17,54,'55808cf7fdf99b4d4eb7c77c','GB','male','3college','Computer Studies','Programmer'),(18,21,'5483d515fdf99b24c654b822','GB','female','seniorsecondary','Psychology','Student'),(19,34,'555a4fb5fdf99b1ad153eb25','US','male','professional','md','unable to work'),(20,31,'55bbc6e7fdf99b3773cdaa63','US','female','3college','English','Artist'),(21,33,'55b67c31fdf99b26b999cc1e','US','female','highschool','n/a','Internet Assessor'),(22,21,'55b703e1fdf99b568ba2ef24','LK','male','seniorsecondary','Computer Science','student'),(23,19,'55bcb3c5fdf99b0c4726c5e8','GB','male','seniorsecondary','Computer Studies (BSc)','Student'),(24,22,'55be577afdf99b2d3095bded','GB','male','masters','Finance','Student'),(25,22,'55a2e2f6fdf99b073bb8c347','US','male','3college','Business','Student'),(26,22,'54248e72fdf99b691fb384ba','IN','female','seniorsecondary','Computer Science','Student'),(27,34,'555a4fb5fdf99b1ad153eb25','US','male','professional','md','unable to work'),(28,35,'55ba0babfdf99b09bd1bec17 ','GB','male','3college','Biological sciences','self-employed'),(29,28,'558ffe16fdf99b3f7aada34d','US','female','3college','Accounting','homemaker'),(30,40,'554a4c37fdf99b744e2ae69f','GB','female','3college','Catering','Chef'),(31,23,'singh.saumya19@outlook.com','IN','female','4college','CS','Software Engineer');
+/*!40000 ALTER TABLE `newapp_player` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2015-08-12 18:06:56
